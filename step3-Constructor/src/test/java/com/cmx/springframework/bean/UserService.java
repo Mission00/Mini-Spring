@@ -4,11 +4,31 @@ public class UserService {
 
     private String name;
     private String uId;
+    private String company;
+    private String location;
 
     private UserDao userDao;
 
     public UserService() {
 
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public UserService setCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public UserService setLocation(String location) {
+        this.location = location;
+        return this;
     }
 
     public UserService(String name) {
@@ -25,8 +45,8 @@ public class UserService {
     public void queryUserInfo() {
         System.out.println(this.toString());
     }
-    public void queryUserInfo(String uId) {
-        System.out.println(userDao.queryUserName(uId));
+    public String queryUserInfo(String uId) {
+        return userDao.queryUserName(uId);
     }
 
     @Override

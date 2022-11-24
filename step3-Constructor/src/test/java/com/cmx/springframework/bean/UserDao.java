@@ -1,6 +1,5 @@
 package com.cmx.springframework.bean;
 
-import com.cmx.springframework.beans.factory.config.BeanReference;
 
 import java.util.HashMap;
 import java.util.Map;
