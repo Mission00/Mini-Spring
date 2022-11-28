@@ -6,6 +6,27 @@ public class BeanDefinition {
 
     private Class beanClass;
     private PropertyValues propertyValues;
+    private boolean singleton = true;
+    private String initMethodName;
+
+
+    public String getInitMethodName() {
+        return initMethodName;
+    }
+
+    public BeanDefinition setInitMethodName(String initMethodName) {
+        this.initMethodName = initMethodName;
+        return this;
+    }
+
+    public boolean isSingleton() {
+        return singleton;
+    }
+
+    public BeanDefinition setSingleton(boolean singleton) {
+        this.singleton = singleton;
+        return this;
+    }
 
     public BeanDefinition(Class beanClass) {
         this.beanClass = beanClass;

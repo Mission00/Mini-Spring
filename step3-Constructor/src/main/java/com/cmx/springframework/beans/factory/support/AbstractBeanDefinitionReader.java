@@ -25,6 +25,13 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
     }
 
     @Override
+    public void loadBeanDefinitions(String[] locations) throws BeansException {
+        for (String location : locations) {
+            loadBeanDefinitions(location);
+        }
+    }
+
+    @Override
     public ResourceLoader getResourceLoader() {
         return resourceLoader;
     }

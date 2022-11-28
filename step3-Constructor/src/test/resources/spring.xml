@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans>-->
 
-    <bean id="userDao" class="com.cmx.springframework.bean.UserDao"/>
+<!--    <bean id="userDao" class="com.cmx.springframework.bean.UserDao"/>-->
 
-    <bean id="userService" class="com.cmx.springframework.bean.UserService">
-        <property name="uId" value="001"/>
-        <property name="company" value="新大陆"/>
-        <property name="location" value="福州"/>
-        <property name="userDao" ref="userDao"/>
-    </bean>
+<!--    <bean id="userService" class="com.cmx.springframework.bean.UserService">-->
+<!--        <property name="uId" value="001"/>-->
+<!--        <property name="company" value="新大陆"/>-->
+<!--        <property name="location" value="福州"/>-->
+<!--        <property name="userDao" ref="userDao"/>-->
+<!--    </bean>-->
 
-</beans>
+<!--</beans>-->

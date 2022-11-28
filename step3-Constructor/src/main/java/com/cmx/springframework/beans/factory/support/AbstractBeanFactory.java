@@ -3,8 +3,16 @@ package com.cmx.springframework.beans.factory.support;
 import com.cmx.springframework.beans.BeansException;
 import com.cmx.springframework.beans.factory.BeanFactory;
 import com.cmx.springframework.beans.factory.config.BeanDefinition;
+import com.cmx.springframework.beans.factory.config.BeanPostProcessor;
+import com.cmx.springframework.beans.factory.config.ConfigurableBeanFactory;
 
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
+
     @Override
     public Object getBean(String name) throws BeansException {
         return doGetBean(name, null);
@@ -30,6 +38,22 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return (T) createBean(name, beanDefinition, args);
     }
 
+
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor){
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    @Override
+    public boolean containsBean(String name) {
+        return containsBeanDefinition(name);
+    }
+    protected abstract boolean containsBeanDefinition(String beanName);
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 

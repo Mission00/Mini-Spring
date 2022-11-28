@@ -1,5 +1,6 @@
 package com.cmx.springframework.beans.factory.support;
 
+import com.cmx.springframework.beans.BeansException;
 import com.cmx.springframework.beans.factory.config.BeanDefinition;
 
 public interface BeanDefinitionRegistry {
@@ -18,4 +19,20 @@ public interface BeanDefinitionRegistry {
      * @return
      */
     boolean containsBeanDefinition(String beanName);
+
+    /**
+     * 根据名称查找BeanDefinition
+     *
+     * @param beanName
+     * @return
+     * @throws BeansException 如果找不到BeanDefintion
+     */
+    BeanDefinition getBeanDefinition(String beanName) throws BeansException;
+
+    /**
+     * 返回定义的所有bean的名称
+     *
+     * @return
+     */
+    String[] getBeanDefinitionNames();
 }

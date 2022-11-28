@@ -68,6 +68,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         loadBeanDefinitions(resource);
     }
 
+
     //    protected void doLoadBeanDefinitions(InputStream inputStream) throws DocumentException {
 //        SAXReader reader = new SAXReader();
 //        Document document = reader.read(inputStream);

@@ -46,6 +46,7 @@ public class UserService {
         System.out.println(this.toString());
     }
     public String queryUserInfo(String uId) {
+        System.out.println(this.toString());
         return userDao.queryUserName(uId);
     }
 
@@ -54,6 +55,8 @@ public class UserService {
         return "UserService{" +
                 "name='" + name + '\'' +
                 ", uId='" + uId + '\'' +
+                ", company='" + company + '\'' +
+                ", location='" + location + '\'' +
                 ", userDao=" + userDao +
                 '}';
     }
