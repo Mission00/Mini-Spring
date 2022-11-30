@@ -1,6 +1,10 @@
 package com.cmx.springframework.bean;
 
-public class UserService {
+
+import com.cmx.springframework.beans.factory.DisposableBean;
+import com.cmx.springframework.beans.factory.InitializingBean;
+
+public class UserService implements InitializingBean, DisposableBean {
 
     private String name;
     private String uId;
@@ -11,6 +15,16 @@ public class UserService {
 
     public UserService() {
 
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("执行：UserService.destroy");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("执行：UserService.afterPropertiesSet");
     }
 
     public String getCompany() {

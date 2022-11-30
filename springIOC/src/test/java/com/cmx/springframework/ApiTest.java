@@ -20,7 +20,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class ApiTest {
     @Test
     public void test_BeanFactory(){
@@ -116,6 +115,18 @@ public class ApiTest {
     public void test_xml_2() {
         // 1.初始化 BeanFactory
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo("3");
+        System.out.println("测试结果：" + result);
+    }
+
+    @Test
+    public void test_xml_3() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring2.xml");
+        applicationContext.registerShutdownHook();
 
         // 2. 获取Bean对象调用方法
         UserService userService = applicationContext.getBean("userService", UserService.class);
