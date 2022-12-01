@@ -8,7 +8,16 @@ public class BeanDefinition {
     private PropertyValues propertyValues;
     private boolean singleton = true;
     private String initMethodName;
+    private String destroyMethodName;
 
+    public String getDestroyMethodName() {
+        return destroyMethodName;
+    }
+
+    public BeanDefinition setDestroyMethodName(String destroyMethodName) {
+        this.destroyMethodName = destroyMethodName;
+        return this;
+    }
 
     public String getInitMethodName() {
         return initMethodName;

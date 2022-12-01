@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cmx.springframework.beans.BeansException;
 import com.cmx.springframework.beans.PropertyValue;
 import com.cmx.springframework.beans.PropertyValues;
+import com.cmx.springframework.beans.factory.DisposableBean;
 import com.cmx.springframework.beans.factory.InitializingBean;
 import com.cmx.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import com.cmx.springframework.beans.factory.config.BeanDefinition;
@@ -33,6 +34,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+
+        // 注册实现了 DisposableBean 接口的 Bean 对象
+        registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
+
 
         addSingleton(beanName, bean);
         return bean;
@@ -115,6 +120,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 throw new BeansException("Could not find an init method named '" + initMethodName + "' on bean with name '" + beanName + "'");
             }
             initMethod.invoke(bean);
+        }
+    }
+
+    //注册
+    protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+        if (bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
+            registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
         }
     }
 
