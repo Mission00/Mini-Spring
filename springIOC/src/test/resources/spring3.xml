@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean id="userDao" class="com.cmx.springframework.bean.UserDao" init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+
+    <bean id="userService" class="com.cmx.springframework.bean.UserService">
+        <property name="uId" value="3"/>
+        <property name="company" value="newlAnd"/>
+        <property name="location" value="fz"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+</beans>

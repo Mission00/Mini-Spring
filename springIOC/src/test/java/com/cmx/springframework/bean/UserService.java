@@ -1,10 +1,15 @@
 package com.cmx.springframework.bean;
 
 
-import com.cmx.springframework.beans.factory.DisposableBean;
-import com.cmx.springframework.beans.factory.InitializingBean;
+import com.cmx.springframework.beans.BeansException;
+import com.cmx.springframework.beans.factory.*;
+import com.cmx.springframework.context.ApplicationContext;
 
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware ,InitializingBean, DisposableBean {
+
+    private ApplicationContext applicationContext;
+    private BeanFactory beanFactory;
+
 
     private String name;
     private String uId;
@@ -16,6 +21,27 @@ public class UserService implements InitializingBean, DisposableBean {
     public UserService() {
 
     }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean Name is：" + name);
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        System.out.println("ClassLoader：" + classLoader);
+    }
+
 
     @Override
     public void destroy() throws Exception {
@@ -62,6 +88,14 @@ public class UserService implements InitializingBean, DisposableBean {
     public String queryUserInfo(String uId) {
         System.out.println(this.toString());
         return userDao.queryUserName(uId);
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
     }
 
     @Override
