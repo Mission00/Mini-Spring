@@ -5,7 +5,9 @@ import com.cmx.springframework.beans.BeansException;
 import com.cmx.springframework.beans.factory.*;
 import com.cmx.springframework.context.ApplicationContext;
 
-public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware ,InitializingBean, DisposableBean {
+import java.util.Random;
+
+public class UserService implements IUserService,BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware ,InitializingBean, DisposableBean {
 
     private ApplicationContext applicationContext;
     private BeanFactory beanFactory;
@@ -17,6 +19,26 @@ public class UserService implements BeanNameAware, BeanClassLoaderAware, Applica
     private String location;
 
     private UserDao userDao;
+
+    public String queryUserInfo() {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "小雄不是大雄，351100，pt";
+    }
+
+
+    public String register(String userName) {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "注册用户：" + userName + " success！";
+    }
+
 
     public UserService() {
 
@@ -80,10 +102,6 @@ public class UserService implements BeanNameAware, BeanClassLoaderAware, Applica
         this.name = name;
         this.uId = uId;
         this.userDao = userDao;
-    }
-
-    public void queryUserInfo() {
-        System.out.println(this.toString());
     }
     public String queryUserInfo(String uId) {
         System.out.println(this.toString());

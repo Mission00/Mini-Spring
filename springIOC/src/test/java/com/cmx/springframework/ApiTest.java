@@ -1,10 +1,12 @@
 package com.cmx.springframework;
 
 import cn.hutool.core.io.IoUtil;
-import com.cmx.springframework.bean.MyBeanFactoryPostProcessor;
-import com.cmx.springframework.bean.MyBeanPostProcessor;
-import com.cmx.springframework.bean.UserDao;
-import com.cmx.springframework.bean.UserService;
+import com.cmx.springframework.aop.AdvisedSupport;
+import com.cmx.springframework.aop.TargetSource;
+import com.cmx.springframework.aop.aspectj.AspectJExpressionPointcut;
+import com.cmx.springframework.aop.framework.Cglib2AopProxy;
+import com.cmx.springframework.aop.framework.JdkDynamicAopProxy;
+import com.cmx.springframework.bean.*;
 import com.cmx.springframework.beans.PropertyValue;
 import com.cmx.springframework.beans.PropertyValues;
 import com.cmx.springframework.beans.core.io.DefaultResourceLoader;
@@ -14,11 +16,13 @@ import com.cmx.springframework.beans.factory.config.BeanReference;
 import com.cmx.springframework.beans.factory.support.DefaultListableBeanFactory;
 import com.cmx.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import com.cmx.springframework.context.support.ClassPathXmlApplicationContext;
+import net.sf.cglib.proxy.MethodInterceptor;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Proxy;
 
 public class ApiTest {
     @Test
@@ -147,6 +151,30 @@ public class ApiTest {
         System.out.println("ApplicationContextAware："+userService.getApplicationContext());
         System.out.println("BeanFactoryAware："+userService.getBeanFactory());
     }
+
+    @Test
+    public void test_dynamic() {
+        // 目标对象
+        IUserService userService = new UserService();
+
+        // 组装代理信息
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTargetSource(new TargetSource(userService));
+        advisedSupport.setMethodInterceptor(new UserServiceInterceptor());
+        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut("execution(* com.cmx.springframework.bean.IUserService.*(..))"));
+
+        // 代理对象(JdkDynamicAopProxy)
+        IUserService proxy_jdk = (IUserService) new JdkDynamicAopProxy(advisedSupport).getProxy();
+        // 测试调用
+        System.out.println("测试结果：" + proxy_jdk.queryUserInfo());
+
+        // 代理对象(Cglib2AopProxy)
+        IUserService proxy_cglib = (IUserService) new Cglib2AopProxy(advisedSupport).getProxy();
+        // 测试调用
+        System.out.println("测试结果：" + proxy_cglib.register("Cglib"));
+    }
+
+
 
 
 }
